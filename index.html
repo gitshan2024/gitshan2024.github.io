@@ -1,12 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Portfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC 자산 관리 페이지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        h1 {
+            text-align: center;
+        }
+        .add-form {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .add-form input {
+            width: 20%;
+            padding: 5px;
+            font-size: 14px;
+        }
+        .add-form button {
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-  <p>Hello, World!</p>
+
+    <h1>PC 자산 관리 페이지</h1>
+
+    <form class="add-form" id="addForm">
+        <input type="text" id="assetId" placeholder="자산 ID" required>
+        <input type="text" id="pcModel" placeholder="PC 모델" required>
+        <input type="text" id="owner" placeholder="소유자" required>
+        <input type="text" id="status" placeholder="상태" required>
+        <button type="submit">추가</button>
+    </form>
+
+    <table id="assetTable">
+        <tr>
+            <th>자산 ID</th>
+            <th>PC 모델</th>
+            <th>소유자</th>
+            <th>상태</th>
+        </tr>
+        <!-- 데이터가 여기에 추가됩니다 -->
+    </table>
+
+    <script>
+        const assetData = [
+            { id: 1, model: 'Dell XPS 13', owner: '홍길동', status: '사용 중' },
+            { id: 2, model: 'MacBook Pro', owner: '김철수', status: '수리 중' }
+        ];
+
+        const table = document.getElementById('assetTable');
+        const addForm = document.getElementById('addForm');
+
+        function renderTable(data) {
+            data.forEach(asset => {
+                const row = document.createElement('tr');
+                Object.values(asset).forEach(text => {
+                    const cell = document.createElement('td');
+                    cell.textContent = text;
+                    row.appendChild(cell);
+                });
+                table.appendChild(row);
+            });
+        }
+
+        renderTable(assetData);
+
+        addForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const newAsset = {
+                id: document.getElementById('assetId').value,
+                model: document.getElementById('pcModel').value,
+                owner: document.getElementById('owner').value,
+                status: document.getElementById('status').value
+            };
+
+            const row = document.createElement('tr');
+            Object.values(newAsset).forEach(text => {
+                const cell = document.createElement('td');
+                cell.textContent = text;
+                row.appendChild(cell);
+            });
+
+            table.appendChild(row);
+
+            addForm.reset();
+        });
+    </script>
+
 </body>
 </html>
